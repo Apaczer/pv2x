@@ -101,12 +101,14 @@ int main (int argc, char **argv) {
 
 	FileList *fl=new FileList(filter);
 	string path=fileDir;
+	bool nofiles = false;
 	do {
-		if (config.firstrun)
+		if (config.firstrun || nofiles)
 			config=configDialog(config);
 		fl->resetList();
 		fl->scanDir(config.path);
 		if (fl->getNumberOfFiles()==0) {
+			nofiles = true;
 			if (noFilesFoundDialog()==0) {
 				exit(0);
 			}
