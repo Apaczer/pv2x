@@ -20,14 +20,13 @@ using namespace std;
 
 SDL_Surface *screen = NULL;
 SDL_Joystick *joy = NULL;
+SDL_Surface *tmpnew = NULL;
+SDL_Surface *tmpold = NULL;
 
-void Terminate(void) {
-	SDL_Quit();
-#ifdef GP2X
-	chdir("/usr/gp2x");
-	execl("/usr/gp2x/gp2xmenu", "/usr/gp2x/gp2xmenu", NULL);
-#endif
-}
+ScaledImage *newimg;
+ScaledImage *img;
+
+void Terminate();
 
 int main (int argc, char **argv) {
 	int done;
@@ -106,7 +105,7 @@ int main (int argc, char **argv) {
 		fl->scanDir(config.path);
 		if (fl->getNumberOfFiles()==0) {
 			if (noFilesFoundDialog()==0) {
-				exit(0);
+				Terminate();
 			}
 		}
 	} while (fl->getNumberOfFiles()==0);
@@ -118,8 +117,7 @@ int main (int argc, char **argv) {
 
 	filename=flrand->getFileName(config.displayOrder);
 	basen=basename(filename.c_str());
-	ScaledImage *newimg;
-	ScaledImage *img=new ScaledImage(filename, config.rotateMode);
+	img=new ScaledImage(filename, config.rotateMode);
 	while (img->loadError) {
 		filename=flrand->getFileName(config.displayOrder);
 		basen=basename(filename.c_str());
@@ -141,8 +139,6 @@ int main (int argc, char **argv) {
 	int nextoffset=1;
 	Uint32 lastTicks=0xffffffff;
 	SDL_Event event;
-	SDL_Surface *tmpnew;
-	SDL_Surface *tmpold;
 
 	if (img->scaledImage->w<SCREEN_WIDTH) {
 		drawoffset=(SCREEN_WIDTH-img->scaledImage->w)>>1;
@@ -181,7 +177,7 @@ int main (int argc, char **argv) {
 								fl->scanDir(config.path);
 								if (fl->getNumberOfFiles()==0) {
 									if (noFilesFoundDialog()==0) {
-										exit(0);
+										Terminate();
 									}
 								}
 							}
@@ -287,4 +283,19 @@ int main (int argc, char **argv) {
 	}
 
 	return 0;
+}
+
+void Terminate(void) {
+	delete img;
+	delete newimg;
+	sdlUnlock(screen);
+	sdlUnlock(tmpnew);
+	sdlUnlock(tmpold);
+	SDL_FreeSurface(tmpnew);
+	SDL_FreeSurface(tmpold);
+	SDL_Quit();
+#ifdef GP2X
+	chdir("/usr/gp2x");
+	execl("/usr/gp2x/gp2xmenu", "/usr/gp2x/gp2xmenu", NULL);
+#endif
 }
