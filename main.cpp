@@ -77,6 +77,7 @@ int main (int argc, char **argv) {
 	config.path=fileDir;
 	config.delay=5000;
 	config.rotateMode=0;
+	config.firstrun=1;
 	config.displayOrder=0;
 	config.showFilename=0;
 	config.plugin=0;
@@ -101,7 +102,8 @@ int main (int argc, char **argv) {
 	FileList *fl=new FileList(filter);
 	string path=fileDir;
 	do {
-		config=configDialog(config);
+		if (config.firstrun)
+			config=configDialog(config);
 		fl->resetList();
 		fl->scanDir(config.path);
 		if (fl->getNumberOfFiles()==0) {
