@@ -55,6 +55,7 @@ Config configDialog(Config actualConfig) {
 	
 	int ypos=0;
 	int done=0;
+	int firstrun=actualConfig.firstrun;
 	int delay=(int) actualConfig.delay/1000;
 	int pluginDelay=(int) actualConfig.pluginDelay/1000;
 	int plugin=actualConfig.plugin;
@@ -274,6 +275,7 @@ Config configDialog(Config actualConfig) {
 	c.path=path;
 	c.delay=delay*1000;
 	c.rotateMode=rotateMode;
+	c.firstrun=firstrun;
 	c.displayOrder=displayOrder;
 	c.showFilename=showFilename;
 	c.plugin=plugin;
@@ -479,6 +481,7 @@ void readConfig(Config *conf) {
 	string path;
 	int delay=5000;
 	int rotateMode=0;
+	int firstrun=0;
 	int displayOrder=0;
 	int showFilename=0;
 	int plugin=0;
@@ -522,6 +525,7 @@ void readConfig(Config *conf) {
 	}
 	conf->delay=delay;
 	conf->rotateMode=rotateMode;
+	conf->firstrun=firstrun;
 	conf->displayOrder=displayOrder;
 	conf->showFilename=showFilename;
 	conf->plugin=plugin;

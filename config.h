@@ -11,6 +11,7 @@ public:
 	std::string path;
 	Uint32 delay;
 	int rotateMode;
+	int firstrun;
 	int displayOrder;
 	int showFilename;
 	int plugin;
