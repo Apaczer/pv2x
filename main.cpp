@@ -66,7 +66,7 @@ int main (int argc, char **argv) {
 #endif
 
 #ifdef MIYOO
-	string fileDir="/mnt";
+	string fileDir="/mnt/pictures";
 #endif
 	SDLTTF *ttf=new SDLTTF(FONT,12);
 	ttf->setForegroundColor(255,255,0);
