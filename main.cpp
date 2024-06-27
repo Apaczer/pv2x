@@ -127,7 +127,8 @@ int main (int argc, char **argv) {
 		img=new ScaledImage(filename, config.rotateMode);
 	}
 
-	img->scale((double) SCREEN_HEIGHT/img->image->h);
+	if (!(img->image->w==SCREEN_WIDTH && img->image->h<=SCREEN_HEIGHT) && !(img->image->h==SCREEN_HEIGHT && img->image->w<=SCREEN_WIDTH))
+		img->scale((double) SCREEN_HEIGHT/img->image->h);
 
 	sdlLock(screen);
 	SDL_FillRect(screen, NULL, 0);
@@ -144,8 +145,11 @@ int main (int argc, char **argv) {
 	SDL_Surface *tmpnew;
 	SDL_Surface *tmpold;
 
-	if (img->scaledImage->w<SCREEN_WIDTH) {
-		drawoffset=(SCREEN_WIDTH-img->scaledImage->w)>>1;
+	if (img->isScaled) {
+		if (img->scaledImage->w<SCREEN_WIDTH) 
+			drawoffset=(SCREEN_WIDTH-img->scaledImage->w)>>1;
+	} else if (img->image->w<SCREEN_WIDTH){
+			drawoffset=(SCREEN_WIDTH-img->image->w)>>1;
 	} else {
 		drawoffset=0;
 	}
@@ -226,8 +230,13 @@ int main (int argc, char **argv) {
 
 		sdlLock(screen);
 		SDL_FillRect(screen, NULL, 0);
-		if (img->scaledImage->w<SCREEN_WIDTH) {
-			img->blit(screen,(SCREEN_WIDTH-img->scaledImage->w)>>1,0);
+		if (img->isScaled) {
+			if (img->scaledImage->w<SCREEN_WIDTH) 
+				img->blit(screen,(SCREEN_WIDTH-img->scaledImage->w)>>1,0);
+			else
+				img->blit(screen);
+		} else if (img->image->w<SCREEN_WIDTH) {
+			img->blit(screen,(SCREEN_WIDTH-img->image->w)>>1,0);
 		} else {
 			img->blit(screen);
 		}
@@ -248,14 +257,18 @@ int main (int argc, char **argv) {
 				delete newimg;
 				newimg=new ScaledImage(filename, config.rotateMode);
 			}
-			newimg->scale((double) SCREEN_HEIGHT/newimg->image->h);
+			if (!(newimg->image->w==SCREEN_WIDTH && newimg->image->h<=SCREEN_HEIGHT) && !(newimg->image->h==SCREEN_HEIGHT && newimg->image->w<=SCREEN_WIDTH))
+				newimg->scale((double) SCREEN_HEIGHT/newimg->image->h);
 
 			tmpold=sdlCreateSurface(SCREEN_WIDTH,SCREEN_HEIGHT);
 			SDL_FillRect(tmpold,NULL,0);
 			img->blit(tmpold,drawoffset,0);
 
-			if (newimg->scaledImage->w<SCREEN_WIDTH) {
-				drawoffset=(SCREEN_WIDTH-newimg->scaledImage->w)>>1;
+			if (newimg->isScaled) {
+				if (newimg->scaledImage->w<SCREEN_WIDTH)
+					drawoffset=(SCREEN_WIDTH-newimg->scaledImage->w)>>1;
+			} else if (newimg->image->w<SCREEN_WIDTH) {
+				drawoffset=(SCREEN_WIDTH-newimg->image->w)>>1;
 			} else {
 				drawoffset=0;
 			}
