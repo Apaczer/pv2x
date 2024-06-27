@@ -78,7 +78,7 @@ int main (int argc, char **argv) {
 	config.delay=5000;
 	config.rotateMode=0;
 	config.firstrun=1;
-	config.displayOrder=0;
+	config.displayOrder=1;
 	config.showFilename=0;
 	config.plugin=0;
 	config.pluginNames=plugins.getNames();
