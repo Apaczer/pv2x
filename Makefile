@@ -33,12 +33,13 @@ clean:
 	$(MAKE) -C plugins clean
 	rm -f $(OBJ)
 	rm -f $(TARGETGP2X) $(TARGETLINUX) $(TARGETMIYOO)
+	rm -rf dist
 
-distclean:clean
+distclean: clean
 	rm -rf dist
 	rm -f pv2x.cfg
 
-dist:all
+dist: all
 	mkdir -p dist/pv2x-$(VERSION)/plugins
 	mkdir -p dist/pv2x-$(VERSION)/doc
 	cp $(TARGET) dist/pv2x-$(VERSION)
@@ -48,10 +49,10 @@ dist:all
 	cp COPYING dist/pv2x-$(VERSION)
 	cp plugins/*.so dist/pv2x-$(VERSION)/plugins
 	cp doc/* dist/pv2x-$(VERSION)/doc
-	cd dist && tar cjvf pv2x-$(VERSION).tar.bz2 pv2x-$(VERSION)
+	cd dist && tar -czvf pv2x-$(VERSION).tar.gz pv2x-$(VERSION)
 	cd dist && zip -r pv2x-$(VERSION).zip pv2x-$(VERSION)
 
-install:dist
+install: dist
 	mount $(SDMOUNTPOINT)
 	cd dist/pv2x-$(VERSION) && cp * $(SDMOUNTPOINT)/$(INSTALLDIR)
 	umount $(SDMOUNTPOINT)
