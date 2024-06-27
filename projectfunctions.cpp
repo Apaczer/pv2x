@@ -37,6 +37,9 @@ int noFilesFoundDialog() {
 						return 1;
 					}
 					break;
+				case SDL_QUIT:
+					return 0;
+					break;
 			}
 			SDL_Delay(100);
 		}
@@ -257,7 +260,7 @@ Config configDialog(Config actualConfig) {
 				case SDL_JOYBUTTONUP:
 					break;
 				case SDL_QUIT:
-					done = 1;
+					exit(0);
 					break;
 				default:
 					break;
