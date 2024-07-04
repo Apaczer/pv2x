@@ -4,3 +4,8 @@ pv2x
 pv2x-miyoo
 pv2x.cfg
 dist/
+opkg_assets/
+package/
+*.lnk
+*.ipk
+*.zip

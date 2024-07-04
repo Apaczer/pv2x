@@ -1,28 +1,42 @@
-pv2x
+# pv2x - Picture Viewer
 
-a BSD-licensed random picture slideshow viewer for the gp2x.
+a BSD-licensed random picture slideshow viewer, initially made for the gp2x.
 
-homepage:
+legacy homepage:
 
 http://pv2x.sourceforge.net
 
-controls:
+## Cross-compiling for MiyooCFW (docker)
+
+```
+git clone https://github.com/Apaczer/pv2x
+cd pv2x/
+docker pull miyoocfw/toolchain-shared-uclibc:latest
+docker run --volume ./:/src/ -it miyoocfw/toolchain-shared-uclibc:latest
+cd /src
+make clean
+make -j$(nproc) SYSTEM=miyoo
+# ---or---
+make -j$(nproc) SYSTEM=miyoo dist-ipk
+```
+
+## Controls:
 
 START		enters config dialog
 SELECT		exits
 
-in config dialog:
+### in config dialog:
 
 UP/DOWN		move cursor
 LEFT/RIGHT	change values
 START		start slideshow
 
-in path selection dialog:
+### in path selection dialog:
 
 B/FIRE		change directory
-X/START		select highligted directory for viewing
+X/START		select highlighted directory for viewing
 
-features:
+## Features:
 
 - fade plugins (see doc/plugins.txt)
 - scans recursively into directory
@@ -31,9 +45,9 @@ features:
 - displays in random or alphabetical order
 - saves config
 
-fade plugins:
+## Fade plugins:
 
-The plugins are real plugins. To setup up your prefered plugin
+The plugins are real plugins. To setup up your preferred plugin
 collection, just move the .so files out of or into the 'plugins'
 directory.
 
@@ -46,7 +60,7 @@ the free gp2x frontend gmenu2x at:
 
 http://gmenu2x.sourceforge.net
 
-problems:
+## Problems:
 
 I have noticed, that on some pc's, depending on the version of
 the SDL_ttf lib installed, with TTF_Render_Solid, there are no
@@ -55,12 +69,7 @@ see a black screen after startup, please a) let me know and
 b) install default sdl libraries again if you have upgraded to
 some non standard libraries.
 
-contact:
-
-If you have any suggestions, problems or questions, have a look
-at http://pv2x.sf.net to find contact information.
-
-thanx:
+## Thanks:
 
 ridcully - for the help with some code parts
 www.gp2x.de - for their work for the gp2x community
@@ -83,8 +92,7 @@ can be be bundled, redistributed and sold with any software.
 
 The fonts are distributed under the following copyright:
 
-Copyright
-=========
+Copyright:
 
 Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved. Bitstream
 Vera is a trademark of Bitstream, Inc.
@@ -132,8 +140,7 @@ Software without prior written authorization from the Gnome Foundation
 or Bitstream Inc., respectively. For further information, contact:
 fonts at gnome dot org.
 
-Copyright FAQ
-=============
+Copyright FAQ:
 
    1. I don't understand the resale restriction... What gives?
 

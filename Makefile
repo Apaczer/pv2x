@@ -35,8 +35,9 @@ clean:
 	rm -f $(TARGETGP2X) $(TARGETLINUX) $(TARGETMIYOO)
 	rm -rf dist
 
-distclean: clean
+clean-dist: clean
 	rm -rf dist
+	rm -f *.ipk
 	rm -f pv2x.cfg
 
 dist: all
@@ -49,8 +50,18 @@ dist: all
 	cp COPYING dist/pv2x-$(VERSION)
 	cp plugins/*.so dist/pv2x-$(VERSION)/plugins
 	cp doc/* dist/pv2x-$(VERSION)/doc
+
+dist-comp: dist
 	cd dist && tar -czvf pv2x-$(VERSION).tar.gz pv2x-$(VERSION)
 	cd dist && zip -r pv2x-$(VERSION).zip pv2x-$(VERSION)
+
+dist-ipk: dist
+	-rm dist/pv2x-$(VERSION)/$(TARGET)
+	-cp $(TARGET) pv2x
+	cp pv2x dist/pv2x-$(VERSION)/
+	gm2xpkg -i pkg.cfg
+	mv pv2x.ipk $(TARGET).ipk
+	@gm2xpkg -c pkg.cfg >/dev/null 2>&1
 
 install: dist
 	mount $(SDMOUNTPOINT)
