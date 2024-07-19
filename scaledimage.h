@@ -16,6 +16,8 @@
 #define ROTATEMODE_NONE 0
 #define ROTATEMODE_ROTATE 1
 #define ROTATEMODE_BEST 2
+#define ROTATEMODE_FLIPH 3
+#define ROTATEMODE_FLIPV 4
 
 class ScaledImage {
 

@@ -66,10 +66,12 @@ Config configDialog(Config actualConfig) {
 	int displayOrder=actualConfig.displayOrder;
 	int rotateMode=actualConfig.rotateMode;
 	string delaytext,rotateText,pluginText,pluginDelayText;
-	string orientations[3]={
-		"Horizontal",
-		"Vertical",
-		"Fit best"
+	string orientations[5]={
+		"Normal",
+		"Rotated",
+		"Fit best",
+		"Flip Horizontal",
+		"Flip Vertical"
 	};
 	string booleans[2]={
 		"No",
@@ -224,7 +226,7 @@ Config configDialog(Config actualConfig) {
 								delay++;
 								break;
 							case 2:
-								if (rotateMode<2) rotateMode++;
+								if (rotateMode<4) rotateMode++;
 								break;
 							case 3:
 								displayOrder=1;
