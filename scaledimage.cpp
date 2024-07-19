@@ -36,6 +36,14 @@ ScaledImage::ScaledImage(std::string filename, int rotateMode) {
 				this->image=sdlCreateSurface(tmp->w,tmp->h);
 			}
 			break;
+		case ROTATEMODE_FLIPH:
+			rotate=2;
+			this->image=sdlCreateSurface(tmp->w,tmp->h);
+			break;
+		case ROTATEMODE_FLIPV:
+			rotate=3;
+			this->image=sdlCreateSurface(tmp->w,tmp->h);
+			break;
 		default:
 			this->image=sdlCreateSurface(tmp->w,tmp->h);
 			break;
@@ -48,9 +56,27 @@ ScaledImage::ScaledImage(std::string filename, int rotateMode) {
 		int srcpitch=tmp->pitch>>1;
 		int dstpitch=image->pitch>>1;
 
-		for (int y=0;y<tmp->h;y++) {
-			for (int x=0;x<tmp->w;x++) {
-				dst[x*dstpitch+y]=src[y*srcpitch+x];
+		if (rotate==1) {
+			for (int y=0;y<tmp->h;y++) {
+				for (int x=0;x<tmp->w;x++) {
+					if (y*srcpitch>=x+1) {
+						if (y!=0 && x!=0) dst[x*dstpitch+y-1]=src[y*srcpitch-x-1];
+						else dst[x*dstpitch+y-1]=src[y*srcpitch+x-1];
+					}
+				}
+			}
+		} else if (rotate==2) {
+			for (int y=0;y<tmp->h;y++) {
+				for (int x=0;x<tmp->w;x++) {
+					if (y*srcpitch>=x+1) {
+						dst[y*dstpitch+x] = src[y*srcpitch-1-x];
+					}
+				}
+			}
+		} else if (rotate==3) {
+			for (int y=0;y<tmp->h;y++) {
+				if (tmp->h>=y+1)
+				memcpy(dst+y*dstpitch, src+(tmp->h-1-y)*srcpitch, srcpitch*2);
 			}
 		}
 	} else {
