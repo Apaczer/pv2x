@@ -271,6 +271,8 @@ int main (int argc, char **argv) {
 			if (newimg->isScaled) {
 				if (newimg->scaledImage->w<SCREEN_WIDTH)
 					drawoffset=(SCREEN_WIDTH-newimg->scaledImage->w)>>1;
+				else
+					drawoffset=0;
 			} else if (newimg->image->w<SCREEN_WIDTH) {
 				drawoffset=(SCREEN_WIDTH-newimg->image->w)>>1;
 			} else {
