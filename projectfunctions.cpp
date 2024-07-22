@@ -21,12 +21,11 @@ int noFilesFoundDialog() {
 				case SDL_JOYBUTTONDOWN:
 					if (
 #ifdef MIYOO
-							(event.key.keysym.sym == SDLK_ESCAPE) ||
-							(event.key.keysym.sym == SDLK_RCTRL)
-#else
+							( event.key.keysym.sym == SDLK_RCTRL ) ||
+#endif
+							( event.key.keysym.sym == SDLK_ESCAPE ) ||
 							( (event.key.keysym.sym == SDLK_c) && (event.key.keysym.mod & (KMOD_LCTRL | KMOD_RCTRL)) ) ||
 							( event.jbutton.button == VK_SELECT )
-#endif
 					   ) {
 						return 0;
 					}
@@ -178,6 +177,12 @@ Config configDialog(Config actualConfig) {
 						if (ypos>0) ypos--;
 					}
 					if (
+#ifdef MIYOO
+                                                (event.key.keysym.sym==SDLK_LSHIFT) ||
+                                                (event.key.keysym.sym==SDLK_LALT) ||
+                                                (event.key.keysym.sym==SDLK_LCTRL) ||
+#endif
+                                                (event.key.keysym.sym==SDLK_SPACE) ||
                                                 (event.jbutton.button==VK_TAT) ||
                                                 (event.jbutton.button==VK_FB) ||
                                                 (event.jbutton.button==VK_FX)
@@ -248,11 +253,10 @@ Config configDialog(Config actualConfig) {
 					}
 					if (
 #ifdef MIYOO
-						(event.key.keysym.sym == SDLK_ESCAPE) ||
-						(event.key.keysym.sym == SDLK_RCTRL)
-#else
-						(event.jbutton.button==VK_SELECT)
+						(event.key.keysym.sym == SDLK_RCTRL) ||
 #endif
+						(event.key.keysym.sym == SDLK_ESCAPE) ||
+						(event.jbutton.button==VK_SELECT)
 					) {
 						exit(0);
 					}
@@ -371,13 +375,10 @@ string pathDialog(string path) {
 				case SDL_KEYDOWN:
                                 case SDL_JOYBUTTONDOWN:
 					if (
-#ifdef MIYOO
-							(event.key.keysym.sym==SDLK_RETURN)
-#else
 							(event.key.keysym.sym==SDLK_x) ||
+							(event.key.keysym.sym==SDLK_RETURN) ||
 							(event.jbutton.button == VK_FX) ||
 							(event.jbutton.button == VK_START)
-#endif
 					) {
 						done=1;
 					}
@@ -407,15 +408,13 @@ string pathDialog(string path) {
 					}
 					if (
 #ifdef MIYOO
-							(event.key.keysym.sym==SDLK_SPACE) ||
 							(event.key.keysym.sym==SDLK_LSHIFT) ||
 							(event.key.keysym.sym==SDLK_LALT) ||
-							(event.key.keysym.sym==SDLK_LCTRL)
-#else
+							(event.key.keysym.sym==SDLK_LCTRL) ||
+#endif
 							(event.key.keysym.sym==SDLK_SPACE) ||
 							(event.jbutton.button == VK_TAT) ||
 							(event.jbutton.button == VK_FB)
-#endif
 					) {
 						newpath=path;
 						if ((path.compare("/")!=0) && (page==0) && (pageOffset==0)) {
