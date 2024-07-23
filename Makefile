@@ -46,7 +46,7 @@ dist: all
 	cp $(TARGET) dist/pv2x-$(VERSION)
 	cp Vera.ttf dist/pv2x-$(VERSION)
 	cp pv2x.png dist/pv2x-$(VERSION)
-	cp README dist/pv2x-$(VERSION)
+	cp README.md dist/pv2x-$(VERSION)/README
 	cp COPYING dist/pv2x-$(VERSION)
 	cp plugins/*.so dist/pv2x-$(VERSION)/plugins
 	cp doc/* dist/pv2x-$(VERSION)/doc
@@ -57,6 +57,7 @@ dist-comp: dist
 
 dist-ipk: dist
 	-rm dist/pv2x-$(VERSION)/$(TARGET)
+	-rm dist/pv2x-$(VERSION)/README
 	-cp $(TARGET) pv2x
 	cp pv2x dist/pv2x-$(VERSION)/
 	gm2xpkg -i pkg.cfg
